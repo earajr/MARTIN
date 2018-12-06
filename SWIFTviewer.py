@@ -177,7 +177,6 @@ class App(tk.Frame):
       tk.Label(self, text="Type").grid(row = 1, column = 3, columnspan=3)
       self.optionmenu1.grid(row = 2, column = 3, columnspan=3)
 
-
       # Case drop down option box
 
       self.var2 = tk.StringVar(self)
@@ -218,10 +217,20 @@ class App(tk.Frame):
       self.next_button = tk.Button(self, text=">", command=self.next)
       self.next_button.grid(row = 2, column = 19)
 
+      # Overlay button
+
+      overlays = ["map_black", "map_white", "grid_black", "grid_white"]
+
+      self.var6 = tk.StringVar(self)
+      self.var6.trace('w', self.check_overlay)
+      self.optionmenu6 = tk.OptionMenu(self, self.var6, *overlays)
+      tk.Label(self, text="Overlay").grid(row = 1, column = 20, columnspan=3)
+      self.optionmenu6.grid(row = 2, column = 20, columnspan=3)
+
       #  Submit button
 
       self.submit_button = tk.Button(self, text="Submit", command=self.check_vals)
-      self.submit_button.grid(row = 2, column = 20, columnspan=3)
+      self.submit_button.grid(row = 2, column = 23, columnspan=3)
 
       # Select pen
 
@@ -475,6 +484,22 @@ class App(tk.Frame):
       else:
          self.status['text']='Please select appropriate type'
 
+   # Check the values in the drop down menues are sensible on the use of the submit button, advise on what needs changing or display image
+
+   def check_overlay(self, *args):
+
+      file_var = self.var6.get()
+
+      ol_file_name = resource_path(file_var+".png")
+
+      self.olim = PIL.Image.open(ol_file_name)
+      self.olreim = self.olim.resize((900,600))
+
+      globals()["oltkim%04d" % self.linecount] = PIL.ImageTk.PhotoImage(self.olreim)
+      
+      self.canvas.create_image(900/2+10,600/2+10, image=globals()["oltkim%04d" % self.linecount], tags = ("lines", "%04d" % self.linecount))
+      self.linecount = self.linecount + 1
+
    # Set background image to previous time
 
    def previous(self, event=None):
@@ -544,7 +569,7 @@ class App(tk.Frame):
       self.canvas.bind('<B1-Motion>', self.paint)
       self.canvas.bind('<ButtonRelease-1>', self.reset)
 
-   # Choose pen option
+   # Choose stamp option
 
    def choose_stamp(self, img):
       self.draw_opt = "stamp"
@@ -571,7 +596,7 @@ class App(tk.Frame):
          self.canvas.create_image(event.x, event.y, image = self.stamp_img, tags = ("lines", "%04d" % self.linecount))
 
 
-   # Reset paint setup before next event
+   # Reset before next event
 
    def reset(self, event):
       self.linecount = self.linecount + 1
