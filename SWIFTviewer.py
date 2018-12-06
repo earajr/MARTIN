@@ -2,7 +2,7 @@
 # Project           : Global Challenges Research Fund (GCRF) African SWIFT (Science for Weather
 #                     Information and Forecasting Techniques.
 #
-# Program name      : CasestudyGUI
+# Program name      : SWIFTviewer
 #
 # Author            : Alexander J. Roberts, University of Leeds, NCAS
 # 
