@@ -22,7 +22,12 @@ from tkinter import filedialog
 import PIL.Image
 import PIL.ImageTk
 import PIL.ImageDraw
-import pyscreenshot as ImageGrab
+import platform
+plat = platform.system()
+if plat == "Linux" or "Unix":
+   import pyscreenshot as ImageGrab
+else:
+   import PIL.ImageGrab as ImageGrab
 import datetime
 import time
 import os
