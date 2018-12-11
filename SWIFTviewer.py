@@ -24,7 +24,7 @@ import PIL.ImageTk
 import PIL.ImageDraw
 import platform
 plat = platform.system()
-if plat == "Linux" or "Unix"
+if plat == "Linux" or "Unix":
    import pyscreenshot as ImageGrab
 else
    import PIL.ImageGrab as ImageGrab
