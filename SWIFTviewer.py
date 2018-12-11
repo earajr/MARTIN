@@ -26,7 +26,7 @@ import platform
 plat = platform.system()
 if plat == "Linux" or "Unix":
    import pyscreenshot as ImageGrab
-else
+else:
    import PIL.ImageGrab as ImageGrab
 import datetime
 import time
