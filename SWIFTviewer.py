@@ -664,8 +664,6 @@ class App(tk.Frame):
 if __name__ == '__main__':
 
    root = tk.Tk()
-   height = root.winfo_screenheight()
-   root.geometry('%dx%d+0+0' % (height*1.2,height*0.8))
    app = App(root)
    app.mainloop()
 
