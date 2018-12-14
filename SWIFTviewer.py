@@ -167,9 +167,11 @@ class App(tk.Frame):
 
       # Logo
 
+      height = root.winfo_screenheight()
+
       logo_file = resource_path("SWIFT_logo.png")
       self.logo = PIL.Image.open(logo_file)
-      self.relogo = self.logo.resize((250,96))
+      self.relogo = self.logo.resize((int(height*0.208),int(height*0.08)))
       self.tklogo = PIL.ImageTk.PhotoImage(self.relogo)
       self.logo_label = tk.Label(self, image=self.tklogo)
       self.logo_label.grid(row = 1, column = 0, rowspan = 3)
@@ -329,15 +331,15 @@ class App(tk.Frame):
 
       # Setup image canvas
 
-      self.canvas = tk.Canvas(self.master,height=600,width=900,bd=10, background = 'white')
+      self.canvas = tk.Canvas(self.master,height=int(height*0.5),width=int(height*0.75),bd=10, background = 'white')
       self.canvas.pack()
 
       # Input starting image
 
       self.im = PIL.Image.open(resource_path("No_image_loaded.png"))
-      self.reim = self.im.resize((900,600))
+      self.reim = self.im.resize((int(height*0.75),int(height*0.5)))
       self.tkim = PIL.ImageTk.PhotoImage(self.reim)
-      self.canvas.create_image(900/2+10,600/2+10, image=self.tkim, tags = "back")
+      self.canvas.create_image(int(height*0.75)/2+10,int(height*0.5)/2+10, image=self.tkim, tags = "back")
 
       # Setup label
 
@@ -359,8 +361,6 @@ class App(tk.Frame):
       self.canvas.bind('<ButtonRelease-1>', self.reset)
       self.linecount = 1
          
-         
-
    # Update dropdown menus based on selection of type
 
    def update_type(self, *args):
@@ -472,10 +472,10 @@ class App(tk.Frame):
                            file_name = glob.glob(file_type+"/"+file_case+"/"+file_var+"/Hovmoeller_"+file_date+"*.png")[0]
 
                      self.im = PIL.Image.open(file_name)
-                     self.reim = self.im.resize((900,600))
+                     self.reim = self.im.resize((int(height*0.75),int(height*0.5)))
                      self.tkim = PIL.ImageTk.PhotoImage(self.reim)
                      self.canvas.delete(self.tkim)
-                     self.canvas.create_image(900/2+10,600/2+10, image=self.tkim, tags = "back")
+                     self.canvas.create_image(int(height*0.75)/2+10,int(height*0.5)/2+10, image=self.tkim, tags = "back")
                      self.canvas.tag_raise("lines")
 
                   else:
@@ -498,11 +498,11 @@ class App(tk.Frame):
       ol_file_name = resource_path(file_var+".png")
 
       self.olim = PIL.Image.open(ol_file_name)
-      self.olreim = self.olim.resize((900,600))
+      self.olreim = self.olim.resize((int(height*0.75),int(height*0.5)))
 
       globals()["oltkim%04d" % self.linecount] = PIL.ImageTk.PhotoImage(self.olreim)
       
-      self.canvas.create_image(900/2+10,600/2+10, image=globals()["oltkim%04d" % self.linecount], tags = ("lines", "%04d" % self.linecount))
+      self.canvas.create_image(int(height*0.75)/2+10,int(height*0.5)/2+10, image=globals()["oltkim%04d" % self.linecount], tags = ("lines", "%04d" % self.linecount))
       self.linecount = self.linecount + 1
 
    # Set background image to previous time
@@ -664,7 +664,8 @@ class App(tk.Frame):
 if __name__ == '__main__':
 
    root = tk.Tk()
+   height = root.winfo_screenheight()
+   root.geometry('%dx%d+0+0' % (height*1.2,height*0.8))
    app = App(root)
    app.mainloop()
-
 
