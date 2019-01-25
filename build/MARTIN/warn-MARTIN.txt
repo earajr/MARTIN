@@ -54,6 +54,6 @@ missing module named Quartz - imported by pyscreenshot.plugins.mac_quartz (delay
 missing module named PyQt4 - imported by pyscreenshot.plugins.qtgrabwindow (delayed)
 missing module named gtk - imported by pyscreenshot.plugins.gtkpixbuf (delayed)
 missing module named wx - imported by pyscreenshot.plugins.wxscreen (delayed)
-missing module named olefile - imported by PIL.FpxImagePlugin (top-level), PIL.MicImagePlugin (top-level)
+missing module named olefile - imported by PIL.MicImagePlugin (top-level), PIL.FpxImagePlugin (top-level)
 missing module named pathlib2 - imported by PIL.Image (optional)
 missing module named __builtin__ - imported by PIL.Image (optional)

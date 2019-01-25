@@ -44,8 +44,7 @@ def resource_path(relative_path):
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
-        base_path = "/nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/resources/."
-#        base_path = os.path.abspath("./resources/.")
+        base_path = os.path.abspath("./resources/.")
 
     return os.path.join(base_path, relative_path)
 
@@ -81,6 +80,10 @@ class App(tk.Frame):
       init_list = []
       var_list = []
 
+      region_count = 0
+      init_count = 0
+      var_count = 0
+
       # loop through top directory
 
       for i in range (0, len(source_list)):
@@ -96,46 +99,49 @@ class App(tk.Frame):
 
          # loop through second level of directories
 
-         for j in range (0, len(region_list[i])):
+         for j in range (0, len(region_list[region_count])):
 
             # check and populate second level forecast dictionary
 
-            if not region_list[i][j] in self.fore_dict[source_list[i]]:
-               self.fore_dict[source_list[i]][region_list[i][j]] = {}
+            if not region_list[region_count][j] in self.fore_dict[source_list[i]]:
+               self.fore_dict[source_list[i]][region_list[region_count][j]] = {}
 
             # define values in third level of directory structure and add to list for use in dictionary
 
-            init_list.append(next(os.walk(source_list[i]+"/"+region_list[i][j]+"/."))[1])
+            init_list.append(next(os.walk(source_list[i]+"/"+region_list[region_count][j]+"/."))[1])
 
             # loop through third level of directories
  
-            for k in range (0, len(init_list[len(flat(source_list[:i]))+j])):
+            for k in range (0, len(init_list[init_count])):     #len(flat(source_list[:i]))+j])):
 
                # check and populate third level forecast dictionary
 
-               if not init_list[j][k] in self.fore_dict[source_list[i]][region_list[i][j]]:
-                  self.fore_dict[source_list[i]][region_list[i][j]][init_list[j][k]] = {}
+               if not init_list[init_count][k] in self.fore_dict[source_list[i]][region_list[region_count][j]]:
+                  self.fore_dict[source_list[i]][region_list[region_count][j]][init_list[init_count][k]] = {}
 
                # define values in fourth level of directory structure and add to list for use in dictionary
 
-               var_list.append(next(os.walk(source_list[i]+"/"+region_list[i][j]+"/"+init_list[j][k]+"/."))[1])
+               var_list.append(next(os.walk(source_list[i]+"/"+region_list[region_count][j]+"/"+init_list[init_count][k]+"/."))[1])
 
                # loop through fourth level of directories
 
-               for l in range(0, len(var_list[len(flat(region_list[i][:j]))+k])):
+               for l in range(0, len(var_list[var_count])):      #len(flat(region_list[i][:j]))+k])):
 
-                  temp_file_names = glob.glob(source_list[i]+"/"+region_list[i][j]+"/"+init_list[j][k]+"/"+var_list[k][l]+"/*")
+                  temp_file_names = glob.glob(source_list[i]+"/"+region_list[region_count][j]+"/"+init_list[init_count][k]+"/"+var_list[var_count][l]+"/*")
                   temp_fores_list = []
                   for tfn in temp_file_names:
                      tfn = os.path.basename(tfn)
-                     if source_list[i] == "GFS":
-                        if tfn.split("_")[0] == "GFSforecast":
-                           temp_fores_list.append((tfn.split("_")[-1]).split(".")[0])
-                        else:
-                           temp_fores_list.append("000")
+                     if "analysis" in tfn:
+                        temp_fores_list.append("000")
+                     if (tfn[-7:-4]).isnumeric():
+                         temp_fores_list.append(tfn[-7:-4])
 
-                  if not var_list[k][l] in self.fore_dict[source_list[i]][region_list[i][j]][init_list[j][k]]:
-                     self.fore_dict[source_list[i]][region_list[i][j]][init_list[j][k]][var_list[k][l]] = list(sorted(set(temp_fores_list)))
+                  if not var_list[var_count][l] in self.fore_dict[source_list[i]][region_list[region_count][j]][init_list[init_count][k]]:
+                     self.fore_dict[source_list[i]][region_list[region_count][j]][init_list[init_count][k]][var_list[var_count][l]] = list(sorted(set(temp_fores_list)))
+
+               var_count = var_count+1
+            init_count = init_count+1
+         region_count = region_count+1
 
 ###################################################################################################
 
@@ -220,9 +226,7 @@ class App(tk.Frame):
       self.next_button.grid(row = 2, column = 19)
 
       # Overlay button
-################### OVERLAYS NEED TO BE UPDATED, ONLY GIVE OPTION OF RIGHT REGION #####################
-      overlays = ["map_black", "map_white", "grid_black", "grid_white"]
-
+      
       self.var6 = tk.StringVar(self)
       self.var6.trace('w', self.check_overlay)
       self.optionmenu6 = tk.OptionMenu(self, self.var6, "")
@@ -438,8 +442,14 @@ class App(tk.Frame):
       if file_fore == "000":
          file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")[0]
       else:
-         file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
+         if(glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")):
+            file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
+         else:
+            file_name = ""
       
+
+      print(file_name)
+
       if file_name:
          self.status['text']='Annotate image as required'
       else:
@@ -475,62 +485,78 @@ class App(tk.Frame):
 
    def previous(self, event=None):
 
-      file_type = self.var1.get()
-      file_case = self.var2.get()
-      file_var = self.var3.get()
-      file_date = self.var4.get()
-      file_time = self.var5.get()
+      file_source = self.var1.get()
+      file_region = self.var2.get()
+      file_init = self.var3.get()
+      file_var = self.var4.get()
+      file_fore = self.var5.get()
 
-      file_time = self.var5.get()
-      if file_time == "":
-         file_time = "000"
-      elif file_type == "GFS":
-         if file_time == "000":
-            file_time = "000"
-         else:
-            file_time = "%03d" % (int(file_time)-3)
+      if file_fore == "":
+         file_fore = self.fore_dict[file_source][file_region][file_init][file_var][0]
+      if file_fore == self.fore_dict[file_source][file_region][file_init][file_var][0]:
+         file_fore = self.fore_dict[file_source][file_region][file_init][file_var][0]
       else:
-         if file_time == "000":
-            date_pos = self.date_dict[file_type][file_case][file_var].index(file_date)
-            if(date_pos > 0):
-               file_time = "021"
-               file_date = self.date_dict[file_type][file_case][file_var][date_pos-1]
-               self.var4.set(file_date)
-         else:
-            file_time = "%03d" % (int(file_time)-3)
+         file_fore = "%03d" % (int(file_fore)-3)
 
-      self.var5.set(file_time)
+# Maybe keep for satellite imagery at later date.
+
+#      elif file_source == "GFS":
+#         if file_time == "000":
+#            file_time = "000"
+#         else:
+#            file_time = "%03d" % (int(file_time)-3)
+#      else:
+#         if file_time == "000":
+#            date_pos = self.date_dict[file_type][file_case][file_var].index(file_date)
+#            if(date_pos > 0):
+#               file_time = "021"
+#               file_date = self.date_dict[file_type][file_case][file_var][date_pos-1]
+#               self.var4.set(file_date)
+#         else:
+#            file_time = "%03d" % (int(file_time)-3)
+
+      self.var5.set(file_fore)
       self.check_vals()
 
-   # Set background image to previous time
+# Set background image to next time
 
    def next(self, event=None):
 
-      file_type = self.var1.get()
-      file_case = self.var2.get()
-      file_var = self.var3.get()
-      file_date = self.var4.get()
-      file_time = self.var5.get()
+      file_source = self.var1.get()
+      file_region = self.var2.get()
+      file_init = self.var3.get()
+      file_var = self.var4.get()
+      file_fore = self.var5.get()
 
-      if file_time == "":
-         file_time = "000"
-      elif file_type == "GFS":
-         if file_time >= "048":
-            file_time = "048"
-         else:
-            file_time = "%03d" % (int(file_time)+3)
+      if file_fore == "":
+         file_fore = self.fore_dict[file_source][file_region][file_init][file_var][0]
+      
+      list_len = len(self.fore_dict[file_source][file_region][file_init][file_var])
+      fore_pos = self.fore_dict[file_source][file_region][file_init][file_var].index(file_fore)
+      if (fore_pos+1 < list_len):
+         file_fore = "%03d" % (int(file_fore)+3)
       else:
-         if file_time >= "021":
-            list_len = len(self.date_dict[file_type][file_case][file_var])
-            date_pos = self.date_dict[file_type][file_case][file_var].index(file_date)
-            if(date_pos+1 < list_len):
-               file_time = "000"
-               file_date = self.date_dict[file_type][file_case][file_var][date_pos+1]
-               self.var4.set(file_date)
-         else:
-            file_time = "%03d" % (int(file_time)+3)
+         file_fore = self.fore_dict[file_source][file_region][file_init][file_var][list_len-1]
 
-      self.var5.set(file_time)
+# Keep for when satellite data is to be used
+
+#      elif file_type == "GFS":
+#         if file_time >= "048":
+#            file_time = "048"
+#         else:
+#            file_time = "%03d" % (int(file_time)+3)
+#      else:
+#         if file_time >= "021":
+#            list_len = len(self.date_dict[file_type][file_case][file_var])
+#            date_pos = self.date_dict[file_type][file_case][file_var].index(file_date)
+#            if(date_pos+1 < list_len):
+#               file_time = "000"
+#               file_date = self.date_dict[file_type][file_case][file_var][date_pos+1]
+#               self.var4.set(file_date)
+#         else:
+#            file_time = "%03d" % (int(file_time)+3)
+
+      self.var5.set(file_fore)
       self.check_vals()
 
    # Choose pen option
