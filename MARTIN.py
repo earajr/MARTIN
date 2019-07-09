@@ -230,13 +230,13 @@ class App(tk.Frame):
       self.var6 = tk.StringVar(self)
       self.var6.trace('w', self.check_overlay)
       self.optionmenu6 = tk.OptionMenu(self, self.var6, "")
-      tk.Label(self, text="Overlay").grid(row = 1, column = 20, columnspan=3)
-      self.optionmenu6.grid(row = 2, column = 20, columnspan=3)
+      tk.Label(self, text="Overlay").grid(row = 1, column = 24, columnspan=3)
+      self.optionmenu6.grid(row = 2, column = 24, columnspan=3)
 
       #  Submit button
 
       self.submit_button = tk.Button(self, text="Submit", command=self.check_vals)
-      self.submit_button.grid(row = 2, column = 23, columnspan=3)
+      self.submit_button.grid(row = 2, column = 27, columnspan=3)
 
       # Select pen
 
@@ -269,10 +269,27 @@ class App(tk.Frame):
       self.clear_back_button = tk.Button(self, text ='clear background', command=self.clear_back)
       self.clear_back_button.grid(row=3, column=18, columnspan=3)
 
+      # white text button
+
+      self.white_text_button = tk.Button(self, text ='white text', command=self.choose_white_text)
+      self.white_text_button.grid(row=3, column=21, columnspan=3)
+
+      # black text button
+
+      self.black_text_button = tk.Button(self, text ='black text', command=self.choose_black_text)
+      self.black_text_button.grid(row=3, column=24, columnspan=3)
+
+      # text entry
+
+      self.text_entry_box = tk.StringVar(self)
+      self.text_entry = tk.Entry(self, textvariable=self.text_entry_box)
+      tk.Label(self, text="Text Entry").grid(row = 1, column = 21, columnspan=3)
+      self.text_entry.grid(row=2, column =21, columnspan=3)
+
       # Save with background button
 
       self.save_all_button = tk.Button(self, text ='save', command= lambda: self.save_all_crop(self.canvas))
-      self.save_all_button.grid(row=3, column=21, columnspan = 3)
+      self.save_all_button.grid(row=3, column=27, columnspan = 3)
 
       # stamp button 1
 
@@ -327,6 +344,7 @@ class App(tk.Frame):
 
       self.conv_button6 = tk.Button(self, image = self.conv_tkimg6, command= lambda: self.choose_stamp(self.conv_tkimg6))
       self.conv_button6.grid(row=3, column=2)
+ 
 
       # Setup image canvas
 
@@ -573,6 +591,20 @@ class App(tk.Frame):
       self.stamp_img = img
       self.canvas.bind('<Button-1>', self.stamp)
 
+   # Choose white text option
+
+   def choose_white_text(self):
+      self.draw_opt = "white_text"
+      self.text_stamp = self.text_entry_box.get()
+      self.canvas.bind('<Button-1>', self.white_text)
+
+   # Choose black text option
+
+   def choose_black_text(self):
+      self.draw_opt = "black_text"
+      self.text_stamp = self.text_entry_box.get()
+      self.canvas.bind('<Button-1>', self.black_text)
+
    # Paint smooth lines on canvas
 
    def paint(self, event):
@@ -592,6 +624,18 @@ class App(tk.Frame):
       if self.draw_opt == "stamp":
          self.canvas.create_image(event.x, event.y, image = self.stamp_img, tags = ("lines", "%04d" % self.linecount))
 
+   # White text stamp when clicked
+
+   def white_text(self,event):
+      if self.draw_opt == "white_text":
+         self.canvas.create_text(event.x, event.y, text=self.text_stamp, font="Helvetica 15", fill ="white", tags = ("lines", "%04d" % self.linecount), width=200)
+
+   # Black text stamp when clicked
+
+   def black_text(self,event):
+      if self.draw_opt == "black_text":
+         
+         self.canvas.create_text(event.x, event.y, text=self.text_stamp, font="Helvetica 15", fill ="black", tags = ("lines", "%04d" % self.linecount), width=200)
 
    # Reset before next event
 
