@@ -32,7 +32,7 @@ missing module named 'java.lang' - imported by platform (delayed, optional), /nf
 missing module named vms_lib - imported by platform (delayed, conditional, optional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
 missing module named winreg - imported by platform (delayed, optional), mimetypes (optional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level), urllib.request (delayed, conditional, optional)
 missing module named org - imported by copy (optional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
-missing module named nt - imported by shutil (conditional), os (conditional, optional), ntpath (conditional, optional), pathlib (conditional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
+missing module named nt - imported by os (conditional, optional), ntpath (conditional, optional), shutil (conditional), pathlib (conditional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
 missing module named ce - imported by os (conditional, optional), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
 missing module named msvcrt - imported by subprocess (conditional), multiprocessing.spawn (delayed, conditional), multiprocessing.popen_spawn_win32 (top-level), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level), getpass (delayed, optional)
 missing module named _winapi - imported by subprocess (conditional), multiprocessing.reduction (conditional), multiprocessing.connection (optional), multiprocessing.heap (conditional), multiprocessing.popen_spawn_win32 (top-level), /nfs/a37/earajr/SWIFT/MARTINviewer/GUI_code/MARTIN/MARTIN.py (top-level)
