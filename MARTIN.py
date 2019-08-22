@@ -79,6 +79,7 @@ class App(tk.Frame):
       region_list = []
       init_list = []
       var_list = []
+      self.trans_list = []
 
       region_count = 0
       init_count = 0
@@ -128,6 +129,10 @@ class App(tk.Frame):
                for l in range(0, len(var_list[var_count])):      #len(flat(region_list[i][:j]))+k])):
 
                   temp_file_names = glob.glob(source_list[i]+"/"+region_list[region_count][j]+"/"+init_list[init_count][k]+"/"+var_list[var_count][l]+"/*")
+                  if temp_file_names:
+                     img = PIL.Image.open(temp_file_names[0])
+                     if img.mode == "RGBA" or "transparency" in img.info:
+                        self.trans_list.extend(temp_file_names)
                   temp_fores_list = []
                   for tfn in temp_file_names:
                      tfn = os.path.basename(tfn)
@@ -216,6 +221,7 @@ class App(tk.Frame):
       # Time drop down option box
 
       self.var5 = tk.StringVar(self)
+      self.var5.trace('w', self.update_time)
       self.optionmenu5 = tk.OptionMenu(self, self.var5, " ")
       tk.Label(self, text="Time").grid(row = 1, column = 16, columnspan=3)
       self.optionmenu5.grid(row = 2, column = 16, columnspan=3)
@@ -409,16 +415,6 @@ class App(tk.Frame):
 
          menu.add_command(label=init, command=lambda ini=init: self.var3.set(ini))
 
-      overlays = ["grid_black_"+self.var2.get(), "grid_white_"+self.var2.get(), "map_black_"+self.var2.get(), "map_white_"+self.var2.get()]
-      
-      menu = self.optionmenu6['menu']
-
-      menu.delete(0, 'end')
-
-      for overlay in overlays:
-         if glob.glob(resource_path(overlay+".png")):
-            menu.add_command(label=overlay, command=lambda over=overlay: self.var6.set(over))
-
    # Update dropdown menus based on the initiation selected
 
    def update_init(self, *args):
@@ -432,6 +428,7 @@ class App(tk.Frame):
       for vari in varis:
 
          menu.add_command(label=vari, command=lambda v=vari: self.var4.set(v))
+
 
 # Update dropdown menus based on the variable selected
 
@@ -447,6 +444,43 @@ class App(tk.Frame):
 
          menu.add_command(label=fore, command=lambda f=fore: self.var5.set(f))
 
+# Update dropdown menus based on the time selected
+
+   def update_time(self, *args):
+
+      file_source = self.var1.get()
+      file_region = self.var2.get()
+      file_init = self.var3.get()
+      file_fore = self.var5.get()
+
+      if file_fore == "000":
+         if glob.glob(file_source+"/"+file_region+"/"+file_init+"/*/*analysis*.png"):
+            files = glob.glob(file_source+"/"+file_region+"/"+file_init+"/*/*analysis*.png")
+         else:
+            files = glob.glob(file_source+"/"+file_region+"/"+file_init+"/*/*"+file_fore+".png")
+      else:
+         if(glob.glob(file_source+"/"+file_region+"/"+file_init+"/*/*"+file_fore+".png")):
+            files = glob.glob(file_source+"/"+file_region+"/"+file_init+"/*/*"+file_fore+".png")
+         else:
+            files = ""
+
+      trans_files = set(files) & set(self.trans_list)
+      trans_vars = []
+      for tf in trans_files:
+         trans_vars.append(tf.split("/")[3])
+
+      overlays = ["grid_black_"+file_region, "grid_white_"+file_region, "map_black_"+file_region, "map_white_"+file_region]
+     
+      menu = self.optionmenu6['menu']
+
+      menu.delete(0, 'end')
+ 
+      for overlay in overlays:
+         if glob.glob(resource_path(overlay+".png")):
+            menu.add_command(label=overlay, command=lambda over=overlay: self.var6.set(over))
+      for trans_var in trans_vars:
+         menu.add_command(label=trans_var, command=lambda over=trans_var: self.var6.set(over))
+
    # Check the values in the drop down menues are sensible on the use of the submit button, advise on what needs changing or display image
 
    def check_vals(self, event=None):
@@ -458,15 +492,15 @@ class App(tk.Frame):
       file_fore = self.var5.get()
 
       if file_fore == "000":
-         file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")[0]
+         if glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")[0]:
+            file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")[0]
+         else:
+            file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
       else:
          if(glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")):
             file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
          else:
             file_name = ""
-      
-
-      print(file_name)
 
       if file_name:
          self.status['text']='Annotate image as required'
@@ -486,9 +520,24 @@ class App(tk.Frame):
 
    def check_overlay(self, *args):
 
+      file_source = self.var1.get()
+      file_region = self.var2.get()
+      file_init = self.var3.get()
+      file_fore = self.var5.get()
       file_var = self.var6.get()
 
-      ol_file_name = resource_path(file_var+".png")
+      if file_fore == "000":
+         if (glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")):
+            ol_file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*analysis*.png")[0]
+         elif (glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")):
+            ol_file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
+         else:
+            ol_file_name = resource_path(file_var+".png")
+      else:
+         if(glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")):
+            ol_file_name = glob.glob(file_source+"/"+file_region+"/"+file_init+"/"+file_var+"/*"+file_fore+".png")[0]
+         else:
+            ol_file_name = resource_path(file_var+".png")
 
       self.olim = PIL.Image.open(ol_file_name)
       aspect_ratio = self.olim.size[0]/self.olim.size[1]
