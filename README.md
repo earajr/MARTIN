@@ -16,7 +16,7 @@ To use MARTIN it is important to first know that there is no need to clone this 
 📂**MARTIN**  
 ├── 📜**MARTIN_executable**  
 ├──📂**Model**  
-    * ├──📂**Domain**  
-        * ├──📂**Initialisation Date**  
-            * ├──📂**Variable**  
-                * ├──📜**Image files**  
+>├──📂**Domain**  
+>>├──📂**Initialisation Date**  
+>>>├──📂**Variable**  
+>>>>├──📜**Image files**  
