@@ -15,7 +15,7 @@ To use MARTIN it is important to first know that there is no need to clone this 
 
 📂**MARTIN**  
  ├── **📜MARTIN_executable**  
- ├──📂**Model**  
+  ├──📂**Model**  
     .
     ├── MARTIN
     │   ├── **MARTIN_executable_file**
