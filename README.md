@@ -39,9 +39,22 @@ The image file naming convention is also important as the directory structure an
 
 ## Use of MARTIN
 
-On running the MARTIN executable a window will be opened as shown in the image below. As the executable opens it automatically maps the subdirectory structure to populate the dropdown menus at the top the of the window. To select an image to be loaded you should first select a "source" in the case of GFS imagery from the GFS plotting suite this will be "GFS". Next the region, initialisation datetime, variable and forecast lead time should be selected. On selecting options from all of these drop down menus you should be able to load an image by pressing the submit button on the far right of the window. If a different, source, region, initialisation or variable are required then these should be selected and the image updated by pressing submit again. The lead time can be selected by either a drop down menu or the back and forward buttons. On selecting a new time using the back and forward button the image will automatically be updated.
+On running the MARTIN executable a window will be opened as shown in the image below. As the executable opens it automatically maps the subdirectory structure to populate the dropdown menus at the top the of the window.
 
 ![image](https://user-images.githubusercontent.com/45661641/142644056-6b964f78-50c6-4098-890d-3860ab72140a.png)
 
+To select an image to be loaded you should first select a "source" in the case of GFS imagery from the GFS plotting suite this will be "GFS". Next the region, initialisation datetime, variable and forecast lead time should be selected. On selecting options from all of these drop down menus you should be able to load an image by pressing the submit button on the far right of the window. If a different, source, region, initialisation or variable are required then these should be selected and the image updated by pressing submit again. The lead time can be selected by either a drop down menu or the back and forward buttons. On selecting a new time using the back and forward button the image will automatically be updated.
+
 ![image](https://user-images.githubusercontent.com/45661641/142652478-975bc54e-7ad5-4c62-9344-de8740520ff5.png)
+
+Once an image has been loaded the annotation layer can be used to mark on important features. This is done by selecting "pen" and simply drawing on the image. The line thickness and colour can be selected to produce a wide range of annotation styles. Even after annotations have been made the background image can be changed and the annotation layer will remain unaffected. Text and convective storm stamps can also be added to help indicate the weather conditions.
+
+![image](https://user-images.githubusercontent.com/45661641/142655592-fc79ba3e-9bcd-4f93-9253-3ad6e3c628fe.png)
+
+As well as hand drawn annotations, text and stamps additional overlay layers can be added to the annotation layer. The overlay layers available are map and gridlines and GFS imagery with transparent layers. At any stage the background image can be removed and only the annotation layer will be viewable.
+
+![image](https://user-images.githubusercontent.com/45661641/142656133-561d6347-a8a2-46f8-b6c0-858d110fecfc.png)
+
+When ready the image in the GUI can be saved to the local disk. 
+
 
