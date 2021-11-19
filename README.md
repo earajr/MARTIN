@@ -14,8 +14,8 @@ To use MARTIN it is important to first know that there is no need to clone this 
 ## Required directory structure and file naming convention
 
 📂**MARTIN**  
- ├── **📜MARTIN_executable**  
-  ├──📂**Model**  
+├── **📜MARTIN_executable**  
+├──📂**Model**  
     .
     ├── MARTIN
     │   ├── **MARTIN_executable_file**
