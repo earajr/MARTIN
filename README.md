@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/160684393.svg)](https://zenodo.org/badge/latestdoi/160684393)
+
 <p align="center">
   <img src="https://github.com/earajr/MARTIN/blob/master/resources/MARTINlogo_small.png?raw=true">
 </p>
