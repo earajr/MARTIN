@@ -14,16 +14,9 @@ To use MARTIN it is important to first know that there is no need to clone this 
 ## Required directory structure and file naming convention
 
 📂**MARTIN**  
-├── **📜MARTIN_executable**  
+├── 📜**MARTIN_executable**  
 ├──📂**Model**  
-    .
-    ├── MARTIN
-    │   ├── **MARTIN_executable_file**
-    │   ├── Model
-    │   │   ├── Domain
-    |   |   |   ├── Initialisation Date
-    |   |   |   |   ├── Variables
-    |   |   |   |   |   ├──**Image files**
-    
-    
-    MARTIN/GFS/EA/2020112806/CAPE_CIN
+|   ├──📂**Domain**
+|   |   ├──📂**Initialisation Date**  
+|   |   |   ├──📂**Variable**
+|   |   |   |   ├──📜**Image files**  
