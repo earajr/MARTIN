@@ -4,7 +4,7 @@
 
 # MARTIN
 
-MARTIN is a graphical user interface developed as part of the Global Challenges Research Fund (GCRF) African SWIFT (Science for Weather Information and Forecasting Techniques) project. MARTIN was originally written by Alexander Roberts (NCAS and University of Leeds). MARTIN allows users to open imagery and navigate backward and fowrard in time through forecast and analysis imagery for a wide variety of variables. An annotation layer allows users to draw directly into the GUI to highlight particular features while allowing the background image to the changed to a different variable, model initialisation or forecast lead time. Imagery with transparent backgrounds (such as streamlines) can also be added to the annotation layer to produce figures with multiple variables. When all annotations have been completed the reusltant image can be saved as a single image.
+MARTIN is a graphical user interface developed as part of the Global Challenges Research Fund (GCRF) African SWIFT (Science for Weather Information and Forecasting Techniques) project. MARTIN was originally written by Alexander Roberts (NCAS and University of Leeds). MARTIN allows users to open imagery and navigate backward and fowrard in time through forecast and analysis imagery for a wide variety of variables. An annotation layer allows users to draw directly into the GUI to highlight particular features while allowing the background image to the changed to a different variable, model initialisation or forecast lead time. Imagery with transparent backgrounds (such as streamlines) can also be added to the annotation layer to produce figures with multiple variables. When all annotations have been completed the reusltant image can be saved as a single image. Within SWIFT, other projects being conducted within the faculty of Environment in the University of Leeds and in African regional training centres, MARTIN has been used with GFS imagery to conduct forecaster training. The simplicity of using MARTIN and the speed with which annotated forecast imagery can be produced allows those running training sessions to quickly assess if students have understood the process of producing forecast maps.
 The imagery that MARTIN was developed for is that produced by the GCRF African SWIFT GFS plotting suite that produces forecast imagery from the Global Forecast System (GFS) Model. The plotting suite can be found here (https://github.com/earajr/GFS_plotting doi: 10.5281/zenodo.3678537). This document is an overview of the features and way in which the MARTIN software can be used. While the GFS imagery is produced by the plotting suite is the primary use case, other imagery can be viewed and annotated using MARTIN as long as the correct directory structure and naming convecntions are adhered to.
 
 ## Github repository
@@ -53,7 +53,7 @@ Once an image has been loaded the annotation layer can be used to mark on import
 
 As well as hand drawn annotations, text and stamps additional overlay layers can be added to the annotation layer. The overlay layers available are map and gridlines and GFS imagery with transparent layers. At any stage the background image can be removed and only the annotation layer will be viewable.
 
-![image](https://user-images.githubusercontent.com/45661641/142656133-561d6347-a8a2-46f8-b6c0-858d110fecfc.png)
+![image](https://user-images.githubusercontent.com/45661641/142656695-c147eda4-4f4d-4a58-a1b1-215933f269cf.png)
 
 When ready the image in the GUI can be saved to the local disk. 
 
