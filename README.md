@@ -36,3 +36,8 @@ The image file naming convention is also important as the directory structure an
 3) GFS forecast, for the East Africa domain,  valid time 0300 UTC 20201129, showing relative humidity, 700 hPa level, initialisation time 0600 UTC 20201128 and a forecast lead time of 21 hours.
 
 **GFSforecast_EA_2020112903_rel_humidity_700hPa_2020112806_021.png**
+
+##
+
+![image](https://user-images.githubusercontent.com/45661641/142644056-6b964f78-50c6-4098-890d-3860ab72140a.png)
+
