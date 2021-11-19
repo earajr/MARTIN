@@ -25,10 +25,14 @@ The required directory structure for MARTIN to function as expected can be found
 
 The image file naming convention is also important as the directory structure and file names work together to make sure the correct images are loaded when requested. Below are some examples of the naming convention. Each part of the file name provides some information about the image, each section is seperated by underscores. 
 
-GFS analysis timestep (zero hour forecast), for the East Africa domain, model initialisation at 0600 UTC 20201128, showing CAPE and CIN, SNGL inidcates this is a single level variable.
+1) GFS analysis timestep (zero hour forecast), for the East Africa domain, valid time 0600 UTC 20201128 (and therefore initialisation time for analyses), showing CAPE and CIN, SNGL inidcates this is a single level variable.
 
 **GFSanalysis_EA_2020112806_CAPECIN_SNGL.png**
 
-
+2) GFS forecast, for the East Africa domain,  valid time 0300 UTC 20201129, showing CAPE and CIN, SNGL inidcates this is a single level variable, initialisation time 0600 UTC 20201128 and a forecast lead time of 21 hours.
 
 **GFSforecast_EA_2020112903_CAPECIN_SNGL_2020112806_021.png**
+
+3)GFS forecast, for the East Africa domain,  valid time 0300 UTC 20201129, showing relative humidity, 700 hPa level, initialisation time 0600 UTC 20201128 and a forecast lead time of 21 hours.
+
+**GFSforecast_EA_2020112903_rel_humidity_700hPa_2020112806_021.png**
